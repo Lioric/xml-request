@@ -14,7 +14,7 @@ data = """<?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
     <SP_WS_FACTURAS_CLIENTE xmlns="http://tempuri.org/">
-      <LN_CUE_ID>40102</LN_CUE_ID>
+      <LN_CUE_ID>{}</LN_CUE_ID>
     </SP_WS_FACTURAS_CLIENTE>
   </soap:Body>
 </soap:Envelope>
@@ -27,14 +27,14 @@ API_FORWARDER_RECEIVER = "http://xxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 class APIForwarderResource(object):
 
-	def on_get(self, req, res, action):
-		res.text = self.build_response(req, res, action)
+	def on_get(self, req, res, meterId):
+		res.text = self.build_response(req, res, meterId)
 		# res.body = self.build_response(req, res, action, False)
 
-	def on_post(self, req, res, action):
-		res.text = self.build_response(req, res, action)
+	# def on_post(self, req, res, action):
+	# 	res.text = self.build_response(req, res, action)
 
-	def build_response(self, req, res, action, isPost=True):
+	def build_response(self, req, res, meterId, isPost=True):
 		xml = ""
 		res.set_header("Content-type", "text/xml")
 		res.status = falcon.HTTP_200
@@ -43,7 +43,7 @@ class APIForwarderResource(object):
 
 			try:
 				print("requesting", url)
-				resp = requests.post(url, headers=headers, data=data)
+				resp = requests.post(url, headers=headers, data=data.format(meterId))
 				xml = resp.text
 				print(resp.text)
 				# print(resp.status_code)
@@ -65,7 +65,7 @@ class APIForwarderServer(object):
 		self.port = port
 		self.falcon_app = falcon.API()
 		self.forwarder_resource = APIForwarderResource()
-		self.falcon_app.add_route("/forwards/{action}", self.forwarder_resource)
+		self.falcon_app.add_route("/mid/{meterId}", self.forwarder_resource)
 
 	def runTestServer(self):
 
