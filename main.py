@@ -21,7 +21,7 @@ data = """<?xml version="1.0" encoding="utf-8"?>
 
 API_FORWARDER_HOST = ""
 # API_FORWARDER_HOST = "127.0.0.1"
-API_FORWARDER_PORT = 8888
+API_FORWARDER_PORT = 80
 API_FORWARDER_RECEIVER = "http://xxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 class APIForwarderResource(object):
