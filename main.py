@@ -1,5 +1,6 @@
 import requests
 import falcon
+import os
 
 from requests.structures import CaseInsensitiveDict
 from wsgiref import simple_server
@@ -21,7 +22,7 @@ data = """<?xml version="1.0" encoding="utf-8"?>
 
 API_FORWARDER_HOST = ""
 # API_FORWARDER_HOST = "127.0.0.1"
-API_FORWARDER_PORT = 80
+API_FORWARDER_PORT = os.environ.get("PORT", 8888)
 API_FORWARDER_RECEIVER = "http://xxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 class APIForwarderResource(object):
