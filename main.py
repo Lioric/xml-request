@@ -69,7 +69,7 @@ class APIForwarderServer(object):
 
 	def runTestServer(self):
 
-		test_server = simple_server.make_server(self.host, self.port,self.falcon_app)
+		test_server = simple_server.make_server(self.host, int(self.port),self.falcon_app)
 		try:
 			print("Running test server at: http://%s:%s" % (self.host, self.port))
 			test_server.serve_forever()
