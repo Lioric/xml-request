@@ -37,6 +37,8 @@ class APIForwarderResource(object):
 	def build_response(self, req, res, meterId, isPost=True):
 		xml = ""
 		res.set_header("Content-type", "text/xml")
+        res.set_header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+        res.set_header("Access-Control-Allow-Origin", "*")
 		res.status = falcon.HTTP_200
 
 		if isPost:
